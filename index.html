@@ -6,11 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Register for XLR8 Hackathon 2025 at Sri Venkateswara College. Open to all colleges. Build, break, innovate in 6 hours!">
   <meta name="keywords" content="XLR8 Hackathon, 2025, Sri Venkateswara College, registration, coding, innovation">
-  <!-- GSAP CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@300;500;700&display=swap');
 
     * {
       margin: 0;
@@ -19,10 +17,13 @@
     }
 
     body {
-      background: linear-gradient(135deg, #1a0033, #4b0082);
-      font-family: 'Poppins', sans-serif;
-      color: #e6e6fa;
+      background: #0a0a23;
+      font-family: 'Inter', sans-serif;
+      color: #f0f0ff;
       min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
       overflow-x: hidden;
       position: relative;
@@ -35,131 +36,164 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.4;
+      opacity: 0.2;
+      filter: blur(2px);
     }
 
     .container {
-      background: rgba(26, 0, 51, 0.9);
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(75, 0, 130, 0.3);
+      background: rgba(20, 20, 40, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
-      overflow: hidden;
-      border: 2px solid #ff4040;
+      border: 1px solid rgba(80, 227, 194, 0.3);
       position: relative;
       z-index: 1;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(75, 0, 130, 0.5);
+      padding: 20px;
+      backdrop-filter: blur(10px);
     }
 
     .header {
-      background: linear-gradient(90deg, #ff4040, #ff6b6b);
-      padding: 25px;
+      background: linear-gradient(135deg, #50e3c2, #4a90e2);
+      padding: 20px;
       text-align: center;
+      border-radius: 15px 15px 0 0;
       position: relative;
-      z-index: 2;
-      border-bottom: 1px solid #ff4040;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+      animation: pulseGlow 6s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 0.5; }
     }
 
     .header h1 {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Roboto Mono', monospace;
       font-size: 2em;
       font-weight: 700;
       color: #fff;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px #ff4040;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px rgba(80, 227, 194, 0.7);
+      position: relative;
+      z-index: 1;
     }
 
     .header p {
       font-size: 0.9em;
-      color: #e6e6fa;
-      margin-top: 5px;
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 8px;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    .countdown {
+      padding: 15px;
+      text-align: center;
+      font-size: 1em;
+      color: #50e3c2;
+      background: rgba(20, 20, 40, 0.8);
+      margin: 15px 0;
+      border-radius: 10px;
+      font-family: 'Roboto Mono', monospace;
+      box-shadow: inset 0 0 10px rgba(80, 227, 194, 0.2);
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
     .form-section {
-      padding: 30px;
-      position: relative;
-      z-index: 2;
+      padding: 0;
     }
 
     .form-group {
-      margin-bottom: 20px;
-      position: relative;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      color: #f0f0ff;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+      padding-left: 10px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(80, 227, 194, 0.2);
+      border-radius: 6px;
+      background: rgba(40, 40, 80, 0.3);
+      color: #f0f0ff;
+      font-size: 0.95em;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: #50e3c2;
+      box-shadow: 0 0 8px rgba(80, 227, 194, 0.3);
+      outline: none;
+    }
+
+    .form-group input.error, .form-group select.error {
+      border-color: #ff6b6b;
+      box-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
     }
 
     .form-group .error-message {
-      color: #ff4757;
+      color: #ff6b6b;
       font-size: 0.8em;
       margin-top: 5px;
       display: none;
+      padding-left: 10px;
     }
 
     .form-group.error .error-message {
       display: block;
     }
 
-    label {
-      display: block;
-      font-weight: 500;
-      color: #e6e6fa;
-      margin-bottom: 8px;
-      font-size: 0.95em;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #2a0055;
-      border-radius: 6px;
-      background: #2a0055;
-      color: #e6e6fa;
-      font-size: 1em;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    input:focus, select:focus {
-      border-color: #00ffff;
-      box-shadow: 0 0 10px #00ffff;
-      outline: none;
-    }
-
-    input.error, select.error {
-      border-color: #ff4757;
-      box-shadow: 0 0 10px #ff4757;
-    }
-
     button {
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(90deg, #ff4040, #ff6b6b);
+      padding: 12px;
+      background: linear-gradient(135deg, #50e3c2, #4a90e2);
       color: #fff;
       font-weight: 700;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.1em;
+      font-size: 1em;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      letter-spacing: 1.5px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-family: 'Roboto Mono', monospace;
     }
 
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 64, 64, 0.6);
-      background: linear-gradient(90deg, #ff6b6b, #ff4040);
+      box-shadow: 0 5px 15px rgba(80, 227, 194, 0.4);
     }
 
     button:disabled {
-      background: #666;
+      background: #4a4a6a;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
@@ -170,10 +204,10 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      border: 3px solid #fff;
-      border-top: 3px solid transparent;
+      border: 2px solid #fff;
+      border-top: 2px solid transparent;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 0.8s linear infinite;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -185,25 +219,27 @@
 
     .info {
       padding: 20px;
-      background: #1a0033;
-      text-align: center;
+      background: rgba(15, 15, 30, 0.9);
+      text-align: left;
       font-size: 0.9em;
-      color: #b0c5e6;
-      position: relative;
-      z-index: 2;
+      color: #d0d0ff;
+      border-radius: 0 0 15px 15px;
     }
 
     .info p {
-      margin: 5px 0;
+      margin: 8px 0;
+      line-height: 1.5;
     }
 
     .info a {
-      color: #00ffff;
+      color: #50e3c2;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
+      transition: color 0.3s ease;
     }
 
     .info a:hover {
+      color: #4a90e2;
       text-decoration: underline;
     }
 
@@ -211,47 +247,93 @@
       padding: 15px;
       text-align: center;
       font-size: 0.8em;
-      color: #a3bffa;
-      background: #0d0026;
-      border-top: 1px solid #2a0055;
-      position: relative;
-      z-index: 2;
+      color: #a0a0cc;
+      background: rgba(10, 10, 25, 0.9);
+      border-top: 1px solid rgba(80, 227, 194, 0.2);
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
+    /* Tablet Layout (768px and above) */
+    @media (min-width: 768px) {
       .container {
-        max-width: 400px;
+        max-width: 900px;
+        padding: 30px;
       }
-      .header h1 {
-        font-size: 1.8em;
-      }
-      .form-section {
-        padding: 20px;
-      }
-    }
 
-    @media (max-width: 480px) {
-      .container {
-        max-width: 100%;
-        margin: 10px;
-      }
       .header h1 {
-        font-size: 1.5em;
+        font-size: 2.5em;
       }
+
       .header p {
-        font-size: 0.85em;
+        font-size: 1.1em;
       }
-      input, select {
-        font-size: 0.9em;
-        padding: 10px;
+
+      .countdown {
+        font-size: 1.2em;
+        margin: 20px 0;
       }
-      button {
+
+      .content-wrapper {
+        flex-direction: row;
+        gap: 20px;
+      }
+
+      .form-section {
+        flex: 1;
+      }
+
+      .info {
+        flex: 1;
+        padding: 25px;
+      }
+    }
+
+    /* Desktop Layout (1024px and above) */
+    @media (min-width: 1024px) {
+      .container {
+        max-width: 1200px;
+        padding: 40px;
+      }
+
+      .header {
+        padding: 30px;
+      }
+
+      .header h1 {
+        font-size: 3em;
+      }
+
+      .header p {
+        font-size: 1.3em;
+      }
+
+      .countdown {
+        font-size: 1.4em;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group input, .form-group select {
+        padding: 12px;
         font-size: 1em;
       }
+
+      button {
+        padding: 14px;
+        font-size: 1.1em;
+      }
+
       .info {
-        padding: 15px;
-        font-size: 0.85em;
+        padding: 30px;
+      }
+
+      .info p {
+        font-size: 1em;
+      }
+
+      .footer {
+        font-size: 0.9em;
       }
     }
   </style>
@@ -260,69 +342,73 @@
   <canvas id="canvas-bg" aria-hidden="true"></canvas>
   <div class="container">
     <div class="header">
-      <h1>XLR8 Hackathon 2025</h1>
+      <h1>XLR8 HACKATHON 2025</h1>
       <p>Open to All Colleges | 6 Hours. Build. Break. Innovate.</p>
     </div>
+    <div class="countdown" aria-live="polite" role="timer"></div>
 
-    <div class="form-section">
-      <form id="registrationForm" novalidate>
-        <div class="form-group">
-          <label for="fullName">Full Name *</label>
-          <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required aria-required="true">
-          <span class="error-message">This field is required.</span>
-        </div>
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required aria-required="true">
-          <span class="error-message">Please enter a valid email address.</span>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone Number *</label>
-          <input type="tel" id="phone" name="phone" placeholder="Enter your phone (e.g., +919470082018)" required pattern="\+?[1-9]\d{9,14}" aria-required="true">
-          <span class="error-message">Please enter a valid phone number (e.g., +919470082018).</span>
-        </div>
-        <div class="form-group">
-          <label for="institution">Institution *</label>
-          <input type="text" id="institution" name="institution" placeholder="Enter your college name" required aria-required="true">
-          <span class="error-message">This field is required.</span>
-        </div>
-        <div class="form-group">
-          <label for="department">Department *</label>
-          <input type="text" id="department" name="department" placeholder="Enter your department" required aria-required="true">
-          <span class="error-message">This field is required.</span>
-        </div>
-        <div class="form-group">
-          <label for="teamName">Team Name *</label>
-          <input type="text" id="teamName" name="teamName" placeholder="Enter your team name" required aria-required="true">
-          <span class="error-message">This field is required.</span>
-        </div>
-        <div class="form-group">
-          <label for="teamSize">Team Size *</label>
-          <select id="teamSize" name="teamSize" required aria-required="true">
-            <option value="">Select team size</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-          <span class="error-message">Please select a team size.</span>
-        </div>
-        <div class="form-group">
-          <label for="rollNo">Roll No *</label>
-          <input type="text" id="rollNo" name="rollNo" placeholder="Enter your roll number" required aria-required="true">
-          <span class="error-message">This field is required.</span>
-        </div>
-        <button type="submit">Register Now</button>
-      </form>
-    </div>
+    <div class="content-wrapper">
+      <div class="form-section">
+        <form id="registrationForm" novalidate>
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            <span class="error-message">This field is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <span class="error-message">Please enter a valid email address.</span>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone (e.g., +919470082018)" required pattern="\+?[1-9]\d{9,14}">
+            <span class="error-message">Please enter a valid phone number (e.g., +919470082018).</span>
+          </div>
+          <div class="form-group">
+            <label for="institution">Institution *</label>
+            <input type="text" id="institution" name="institution" placeholder="Enter your college name" required>
+            <span class="error-message">This field is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="department">Department *</label>
+            <input type="text" id="department" name="department" placeholder="Enter your department" required>
+            <span class="error-message">This field is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="teamName">Team Name *</label>
+            <input type="text" id="teamName" name="teamName" placeholder="Enter your team name" required>
+            <span class="error-message">This field is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="teamSize">Team Size *</label>
+            <select id="teamSize" name="teamSize" required>
+              <option value="">Select team size</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+            <span class="error-message">Please select a team size.</span>
+          </div>
+          <div class="form-group">
+            <label for="rollNo">Roll No *</label>
+            <input type="text" id="rollNo" name="rollNo" placeholder="Enter your roll number" required>
+            <span class="error-message">This field is required.</span>
+          </div>
+          <button type="submit">Register Now</button>
+        </form>
+      </div>
 
-    <div class="info">
-      <p><strong>Event Date:</strong> April 11, 2025</p>
-      <p><strong>Venue:</strong> ICT Faculty Lab, Arts Block, Sri Venkateswara College</p>
-      <p><strong>Reporting Time:</strong> 10:00 AM (All participants must report on time)</p>
-      <p><strong>Registration Deadline:</strong> April 8, 2025</p>
-      <p><strong>Register Online:</strong> <a href="bit.ly/xyz" target="_blank">bit.ly/xyz</a></p>
-      <p><strong>Contact:</strong> Jayant Issar (+91 9470082018)</p>
-      <p><strong>Teacher-in-Charge:</strong> Prof. J Lalita</p>
-      <p><strong>Principal:</strong> Prof. V Ravi</p>
+      <div class="info">
+        <p><strong>Event Date:</strong> April 11, 2025</p>
+        <p><strong>Venue:</strong> ICT Faculty Lab, Arts Block, Sri Venkateswara College</p>
+        <p><strong>Reporting Time:</strong> 10:00 AM (All participants must report on time)</p>
+        <p><strong>Registration Deadline:</strong> April 8, 2025</p>
+        <p><strong>Register Online:</strong> <a href="bit.ly/xyz" target="_blank">bit.ly/xyz</a></p>
+        <p><strong>Instagram:</strong> <a href="https://www.instagram.com/luminous.svc" target="_blank">luminous.svc</a></p>
+        <p><strong>Contact:</strong> Jayant Issar (+91 9470082018)</p>
+        <p><strong>Teacher-in-Charge:</strong> Prof. J Lalita</p>
+        <p><strong>Principal:</strong> Prof. V Ravi</p>
+      </div>
     </div>
 
     <div class="footer">
@@ -331,46 +417,37 @@
   </div>
 
   <script>
-    // Canvas Background Animation (Matrix Digital Rain)
+    // Canvas Background Animation
     const canvas = document.getElementById('canvas-bg');
     const ctx = canvas.getContext('2d');
-    let animationFrameId;
 
     const streams = [];
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
-    const characters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 14;
+    const characters = "01XLR8HACKATHON2025";
 
     class Stream {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * -canvas.height; // Start above canvas
-        this.speed = Math.random() * 2 + 1;
-        this.length = Math.random() * 30 + 10;
-        this.opacity = Math.random() * 0.5 + 0.3;
+      constructor(x) {
+        this.x = x;
+        this.y = Math.random() * -canvas.height;
+        this.speed = Math.random() * 1 + 0.5;
+        this.length = Math.floor(Math.random() * 20 + 10);
+        this.opacity = Math.random() * 0.3 + 0.2;
+        this.text = this.generateText();
       }
 
       generateText() {
-        this.text = "";
-        for (let i = 0; i < this.length; i++) {
-          this.text += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
+        return Array(this.length).fill().map(() => 
+          characters.charAt(Math.floor(Math.random() * characters.length))
+        ).join('');
       }
 
       draw() {
-        ctx.fillStyle = `rgba(0, 255, 0, ${this.opacity})`;
-        ctx.font = `${fontSize}px monospace`;
-        for (let i = 0; i < this.text.length; i++) {
-          const char = this.text.charAt(i);
+        ctx.fillStyle = `rgba(80, 227, 194, ${this.opacity})`;
+        ctx.font = `${fontSize}px 'Roboto Mono', monospace`;
+        for (let i = 0; i < this.length; i++) {
           const yPos = this.y + i * fontSize;
-          if (yPos > canvas.height) continue;
-          ctx.fillText(char, this.x, yPos);
-
-          if (i === 0) {
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "rgba(0, 255, 0, 0.7)";
-            ctx.fillText(char, this.x, yPos);
-            ctx.shadowBlur = 0;
+          if (yPos > 0 && yPos < canvas.height) {
+            ctx.fillText(this.text[i], this.x, yPos);
           }
         }
       }
@@ -378,111 +455,115 @@
       update() {
         this.y += this.speed;
         if (this.y > canvas.height) {
-          this.y = Math.random() * -100;
-          this.generateText();
-          this.opacity = Math.random() * 0.5 + 0.3;
+          this.y = -this.length * fontSize;
+          this.text = this.generateText();
         }
       }
     }
 
-    function init() {
+    function initCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      streams.length = 0; // Clear existing streams
-      for (let i = 0; i < Math.floor(canvas.width / fontSize); i++) {
-        streams[i] = new Stream();
-        streams[i].generateText();
+      streams.length = 0;
+      const columns = Math.floor(canvas.width / fontSize);
+      for (let i = 0; i < columns; i++) {
+        streams.push(new Stream(i * fontSize));
       }
     }
 
-    function animate() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    function animateCanvas() {
+      ctx.fillStyle = 'rgba(10, 10, 35, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < streams.length; i++) {
-        streams[i].update();
-        streams[i].draw();
-      }
-
-      animationFrameId = requestAnimationFrame(animate);
+      streams.forEach(stream => {
+        stream.update();
+        stream.draw();
+      });
+      requestAnimationFrame(animateCanvas);
     }
 
-    function startAnimation() {
-      if (!animationFrameId) {
-        animate();
+    initCanvas();
+    animateCanvas();
+    window.addEventListener('resize', initCanvas);
+
+    // Countdown Timer
+    function updateCountdown() {
+      const deadline = new Date("April 8, 2025 23:59:59 GMT+0530").getTime();
+      const now = new Date().getTime();
+      const distance = deadline - now;
+
+      if (distance < 0) {
+        document.querySelector('.countdown').innerHTML = "Registration Deadline Has Passed!";
+        return;
       }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.querySelector('.countdown').innerHTML = `Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
-    function stopAnimation() {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-      }
-    }
-
-    // Initialize and start
-    init();
-    startAnimation();
-
-    // Optimized resize handler
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      stopAnimation();
-      resizeTimeout = setTimeout(() => {
-        init();
-        startAnimation();
-      }, 100); // Throttle resize to 100ms
-    });
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
     // GSAP Animations
     document.addEventListener("DOMContentLoaded", () => {
       gsap.from(".container", {
         opacity: 0,
-        scale: 0.95,
+        y: 50,
         duration: 1,
         ease: "power2.out"
       });
 
-      gsap.from(".header", {
+      gsap.from(".header h1", {
         opacity: 0,
-        y: -50,
-        duration: 1,
-        ease: "power2.out",
-        delay: 0.2
+        y: 20,
+        duration: 0.8,
+        delay: 0.2,
+        ease: "power2.out"
+      });
+
+      gsap.from(".header p", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.4,
+        ease: "power2.out"
+      });
+
+      gsap.from(".countdown", {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.8,
+        delay: 0.6,
+        ease: "back.out(1.7)"
       });
 
       gsap.from(".form-group", {
         opacity: 0,
         y: 30,
         duration: 0.8,
-        stagger: 0.2,
-        delay: 0.5,
+        stagger: 0.1,
+        delay: 0.8,
         ease: "power2.out"
       });
 
-      gsap.from(".info", {
+      gsap.from(".info p", {
         opacity: 0,
-        y: 50,
+        x: -20,
         duration: 0.8,
+        stagger: 0.05,
         delay: 1,
         ease: "power2.out"
       });
 
       gsap.from(".footer", {
         opacity: 0,
-        y: 30,
+        y: 20,
         duration: 0.8,
         delay: 1.2,
         ease: "power2.out"
-      });
-
-      const button = document.querySelector("button");
-      button.addEventListener("mouseenter", () => {
-        gsap.to(button, { scale: 1.05, duration: 0.3, ease: "power1.out" });
-      });
-      button.addEventListener("mouseleave", () => {
-        gsap.to(button, { scale: 1, duration: 0.3, ease: "power1.out" });
       });
     });
 
@@ -497,7 +578,6 @@
       let isValid = true;
       groups.forEach(group => {
         const input = group.querySelector("input, select");
-        const errorMsg = group.querySelector(".error-message");
         group.classList.remove("error");
 
         if (!input.value) {
@@ -510,14 +590,10 @@
           group.classList.add("error");
           isValid = false;
         }
-        if (group.classList.contains("error")) {
-          errorMsg.style.display = "block";
-        } else {
-          errorMsg.style.display = "none";
-        }
       });
 
       if (!isValid) {
+        document.querySelector('.countdown').textContent = "Please correct the errors in the form.";
         return;
       }
 
@@ -526,24 +602,21 @@
 
       fetch("https://script.google.com/macros/s/AKfycbztmnr0EWZB0heesa41No6vovUFddEUxgI3zZrErp4jFV1J9oQe4lKJ5jf68k9eize4-A/exec", {
         method: "POST",
-        body: formData
+        body: formData,
+        mode: 'no-cors' // Google Apps Script often requires this
       })
-      .then(response => response.text())
-      .then(result => {
-        alert("✅ Registration for XLR8 Hackathon 2025 submitted successfully!");
+      .then(() => {
+        document.querySelector('.countdown').textContent = "✅ Registration Submitted Successfully!";
         form.reset();
-        groups.forEach(group => {
-          group.classList.remove("error");
-          group.querySelector(".error-message").style.display = "none";
-        });
-        gsap.fromTo(".container", { scale: 1.05, opacity: 0.95 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+        gsap.to(".container", { scale: 1.02, duration: 0.3, yoyo: true, repeat: 1 });
       })
       .catch(error => {
-        alert("❌ Error submitting form: " + error.message);
+        document.querySelector('.countdown').textContent = `❌ Error: ${error.message}`;
       })
       .finally(() => {
         button.disabled = false;
         button.textContent = "Register Now";
+        setTimeout(() => updateCountdown(), 3000);
       });
     });
   </script>
