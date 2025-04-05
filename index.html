@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XLR8 Hackathon 2025 - Open Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register for XLR8 Hackathon 2025 at Sri Venkateswara College. Open to all colleges. Build, break, innovate in 6 hours!">
+  <meta name="keywords" content="XLR8 Hackathon, 2025, Sri Venkateswara College, registration, coding, innovation">
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a0033, #4b0082);
+      font-family: 'Poppins', sans-serif;
+      color: #e6e6fa;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #canvas-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    .container {
+      background: rgba(26, 0, 51, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(75, 0, 130, 0.3);
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 2px solid #ff4040;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #ff4040, #ff6b6b);
+      padding: 25px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid #ff4040;
+    }
+
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2em;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #ff4040;
+    }
+
+    .header p {
+      font-size: 0.9em;
+      color: #e6e6fa;
+      margin-top: 5px;
+      opacity: 0.9;
+    }
+
+    .form-section {
+      padding: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      color: #e6e6fa;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #2a0055;
+      border-radius: 6px;
+      background: #2a0055;
+      color: #e6e6fa;
+      font-size: 1em;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #00ffff;
+      box-shadow: 0 0 10px #00ffff;
+      outline: none;
+    }
+
+    input.error, select.error {
+      border-color: #ff4757;
+      box-shadow: 0 0 10px #ff4757;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #ff4040, #ff6b6b);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 64, 64, 0.6);
+      background: linear-gradient(90deg, #ff6b6b, #ff4040);
+    }
+
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .info {
+      padding: 20px;
+      background: #1a0033;
+      text-align: center;
+      font-size: 0.9em;
+      color: #b0c5e6;
+      position: relative;
+      z-index: 2;
+    }
+
+    .info p {
+      margin: 5px 0;
+    }
+
+    .info a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .info a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      padding: 15px;
+      text-align: center;
+      font-size: 0.8em;
+      color: #a3bffa;
+      background: #0d0026;
+      border-top: 1px solid #2a0055;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        max-width: 400px;
+      }
+      .header h1 {
+        font-size: 1.8em;
+      }
+      .form-section {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        max-width: 100%;
+        margin: 10px;
+      }
+      .header h1 {
+        font-size: 1.5em;
+      }
+      .header p {
+        font-size: 0.85em;
+      }
+      input, select {
+        font-size: 0.9em;
+        padding: 10px;
+      }
+      button {
+        font-size: 1em;
+      }
+      .info {
+        padding: 15px;
+        font-size: 0.85em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="header">
+      <h1>XLR8 Hackathon 2025</h1>
+      <p>Open to All Colleges | 6 Hours. Build. Break. Innovate.</p>
+    </div>
+
+    <div class="form-section">
+      <form id="registrationForm" novalidate>
+        <div class="form-group">
+          <label for="fullName">Full Name *</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone (e.g., +919470082018)" required pattern="\+?[1-9]\d{9,14}" aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="institution">Institution *</label>
+          <input type="text" id="institution" name="institution" placeholder="Enter your college name" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="department">Department *</label>
+          <input type="text" id="department" name="department" placeholder="Enter your department" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="teamName">Team Name *</label>
+          <input type="text" id="teamName" name="teamName" placeholder="Enter your team name" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="teamSize">Team Size *</label>
+          <select id="teamSize" name="teamSize" required aria-required="true">
+            <option value="">Select team size</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rollNo">Roll No *</label>
+          <input type="text" id="rollNo" name="rollNo" placeholder="Enter your roll number" required aria-required="true">
+        </div>
+        <button type="submit">Register Now</button>
+      </form>
+    </div>
+
+    <div class="info">
+      <p><strong>Venue:</strong> ICT Faculty Lab, Arts Block, Sri Venkateswara College</p>
+      <p><strong>Reporting Time:</strong> 10:00 AM (All participants must report on time)</p>
+      <p><strong>Registration Deadline:</strong> April 8, 2025</p>
+      <p><strong>Register Online:</strong> <a href="bit.ly/xyz" target="_blank">bit.ly/xyz</a></p>
+      <p><strong>Contact:</strong> Jayant Issar (+91 9470082018)</p>
+      <p><strong>Teacher-in-Charge:</strong> Prof. J Lalita</p>
+      <p><strong>Principal:</strong> Prof. V Ravi</p>
+    </div>
+
+    <div class="footer">
+      <p>Powered by LuminUS | © 2025 Sri Venkateswara College, DU</p>
+    </div>
+  </div>
+
+  <script>
+    // Canvas Background Animation
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const icons = ['💻', '🔧', '🌐', '⚙️', '📡', '🚀', '💾'];
+    const particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 25 + 10;
+        this.speedX = Math.random() * 1.5 - 0.75;
+        this.speedY = Math.random() * 1.5 - 0.75;
+        this.accelX = 0;
+        this.accelY = 0;
+        this.icon = icons[Math.floor(Math.random() * icons.length)];
+        this.life = Math.random() * 0.5 + 0.5;
+        this.maxLife = this.life;
+        this.decay = Math.random() * 0.008 + 0.004;
+        this.hue = Math.random() * 360;
+      }
+
+      update() {
+        this.speedX += this.accelX;
+        this.speedY += this.accelY;
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) {
+          this.speedX = -this.speedX * (0.8 + Math.random() * 0.2);
+          this.x = this.x < 0 ? 0 : canvas.width;
+        }
+        if (this.y < 0 || this.y > canvas.height) {
+          this.speedY = -this.speedY * (0.8 + Math.random() * 0.2);
+          this.y = this.y < 0 ? 0 : canvas.height;
+        }
+
+        this.accelY = Math.sin(Date.now() * 0.001) * 0.02;
+        this.life -= this.decay;
+        if (this.life <= 0) this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 25 + 10;
+        this.speedX = Math.random() * 1.5 - 0.75;
+        this.speedY = Math.random() * 1.5 - 0.75;
+        this.life = Math.random() * 0.5 + 0.5;
+        this.maxLife = this.life;
+        this.hue = Math.random() * 360;
+      }
+
+      draw() {
+        ctx.globalAlpha = this.life / this.maxLife;
+        ctx.fillStyle = `hsl(${this.hue}, 80%, 60%)`;
+        ctx.font = `${this.size}px Orbitron`;
+        ctx.textAlign = 'center';
+        ctx.fillText(this.icon, this.x, this.y);
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.fillText(this.icon, this.x, this.y);
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function init() {
+      for (let i = 0; i < 40; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(75, 0, 130, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      if (particles.length < 40 && Math.random() < 0.1) {
+        particles.push(new Particle());
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // GSAP Animations
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.from(".container", {
+        opacity: 0,
+        scale: 0.95,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.from(".header", {
+        opacity: 0,
+        y: -50,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.2
+      });
+
+      gsap.from(".form-group", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        stagger: 0.2,
+        delay: 0.5,
+        ease: "power2.out"
+      });
+
+      gsap.from(".info", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        delay: 1,
+        ease: "power2.out"
+      });
+
+      gsap.from(".footer", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        delay: 1.2,
+        ease: "power2.out"
+      });
+
+      const button = document.querySelector("button");
+      button.addEventListener("mouseenter", () => {
+        gsap.to(button, { scale: 1.05, duration: 0.3, ease: "power1.out" });
+      });
+      button.addEventListener("mouseleave", () => {
+        gsap.to(button, { scale: 1, duration: 0.3, ease: "power1.out" });
+      });
+    });
+
+    // Form Validation and Submission
+    document.getElementById("registrationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const button = form.querySelector("button");
+      const formData = new FormData(form);
+
+      let isValid = true;
+      const inputs = form.querySelectorAll("input[required], select[required]");
+      inputs.forEach(input => {
+        if (!input.value) {
+          input.classList.add("error");
+          isValid = false;
+        } else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+          input.classList.add("error");
+          isValid = false;
+        } else if (input.type === "tel" && !input.value.match(/\+?[1-9]\d{9,14}/)) {
+          input.classList.add("error");
+          isValid = false;
+        } else {
+          input.classList.remove("error");
+        }
+      });
+
+      if (!isValid) {
+        alert("Please fill in all fields correctly. Ensure email and phone number formats are valid.");
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Submitting...";
+
+      fetch("https://script.google.com/macros/s/AKfycbztmnr0EWZB0heesa41No6vovUFddEUxgI3zZrErp4jFV1J9oQe4lKJ5jf68k9eize4-A/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(result => {
+        alert("✅ Registration for XLR8 Hackathon 2025 submitted successfully!");
+        form.reset();
+        inputs.forEach(input => input.classList.remove("error"));
+        gsap.fromTo(".container", { scale: 1.05, opacity: 0.95 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+      })
+      .catch(error => {
+        alert("❌ Error submitting form: " + error.message);
+      })
+      .finally(() => {
+        button.disabled = false;
+        button.textContent = "Register Now";
+      });
+    });
+  </script>
+</body>
+</html>
