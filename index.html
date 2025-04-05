@@ -35,7 +35,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.3;
+      opacity: 0.4;
     }
 
     .container {
@@ -49,6 +49,12 @@
       border: 2px solid #ff4040;
       position: relative;
       z-index: 1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(75, 0, 130, 0.5);
     }
 
     .header {
@@ -86,6 +92,17 @@
     .form-group {
       margin-bottom: 20px;
       position: relative;
+    }
+
+    .form-group .error-message {
+      color: #ff4757;
+      font-size: 0.8em;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .form-group.error .error-message {
+      display: block;
     }
 
     label {
@@ -131,7 +148,8 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
     }
 
     button:hover {
@@ -145,6 +163,24 @@
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+    }
+
+    button:disabled::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #fff;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
     .info {
@@ -233,26 +269,32 @@
         <div class="form-group">
           <label for="fullName">Full Name *</label>
           <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required aria-required="true">
+          <span class="error-message">This field is required.</span>
         </div>
         <div class="form-group">
           <label for="email">Email *</label>
           <input type="email" id="email" name="email" placeholder="Enter your email" required aria-required="true">
+          <span class="error-message">Please enter a valid email address.</span>
         </div>
         <div class="form-group">
           <label for="phone">Phone Number *</label>
           <input type="tel" id="phone" name="phone" placeholder="Enter your phone (e.g., +919470082018)" required pattern="\+?[1-9]\d{9,14}" aria-required="true">
+          <span class="error-message">Please enter a valid phone number (e.g., +919470082018).</span>
         </div>
         <div class="form-group">
           <label for="institution">Institution *</label>
           <input type="text" id="institution" name="institution" placeholder="Enter your college name" required aria-required="true">
+          <span class="error-message">This field is required.</span>
         </div>
         <div class="form-group">
           <label for="department">Department *</label>
           <input type="text" id="department" name="department" placeholder="Enter your department" required aria-required="true">
+          <span class="error-message">This field is required.</span>
         </div>
         <div class="form-group">
           <label for="teamName">Team Name *</label>
           <input type="text" id="teamName" name="teamName" placeholder="Enter your team name" required aria-required="true">
+          <span class="error-message">This field is required.</span>
         </div>
         <div class="form-group">
           <label for="teamSize">Team Size *</label>
@@ -261,16 +303,19 @@
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          <span class="error-message">Please select a team size.</span>
         </div>
         <div class="form-group">
           <label for="rollNo">Roll No *</label>
           <input type="text" id="rollNo" name="rollNo" placeholder="Enter your roll number" required aria-required="true">
+          <span class="error-message">This field is required.</span>
         </div>
         <button type="submit">Register Now</button>
       </form>
     </div>
 
     <div class="info">
+      <p><strong>Event Date:</strong> April 11, 2025</p>
       <p><strong>Venue:</strong> ICT Faculty Lab, Arts Block, Sri Venkateswara College</p>
       <p><strong>Reporting Time:</strong> 10:00 AM (All participants must report on time)</p>
       <p><strong>Registration Deadline:</strong> April 8, 2025</p>
@@ -286,105 +331,108 @@
   </div>
 
   <script>
-    // Canvas Background Animation
+    // Canvas Background Animation (Matrix Digital Rain)
     const canvas = document.getElementById('canvas-bg');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let animationFrameId;
 
-    const icons = ['💻', '🔧', '🌐', '⚙️', '📡', '🚀', '💾'];
-    const particles = [];
+    const streams = [];
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const characters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    class Particle {
+    class Stream {
       constructor() {
         this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 25 + 10;
-        this.speedX = Math.random() * 1.5 - 0.75;
-        this.speedY = Math.random() * 1.5 - 0.75;
-        this.accelX = 0;
-        this.accelY = 0;
-        this.icon = icons[Math.floor(Math.random() * icons.length)];
-        this.life = Math.random() * 0.5 + 0.5;
-        this.maxLife = this.life;
-        this.decay = Math.random() * 0.008 + 0.004;
-        this.hue = Math.random() * 360;
+        this.y = Math.random() * -canvas.height; // Start above canvas
+        this.speed = Math.random() * 2 + 1;
+        this.length = Math.random() * 30 + 10;
+        this.opacity = Math.random() * 0.5 + 0.3;
       }
 
-      update() {
-        this.speedX += this.accelX;
-        this.speedY += this.accelY;
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x < 0 || this.x > canvas.width) {
-          this.speedX = -this.speedX * (0.8 + Math.random() * 0.2);
-          this.x = this.x < 0 ? 0 : canvas.width;
+      generateText() {
+        this.text = "";
+        for (let i = 0; i < this.length; i++) {
+          this.text += characters.charAt(Math.floor(Math.random() * characters.length));
         }
-        if (this.y < 0 || this.y > canvas.height) {
-          this.speedY = -this.speedY * (0.8 + Math.random() * 0.2);
-          this.y = this.y < 0 ? 0 : canvas.height;
-        }
-
-        this.accelY = Math.sin(Date.now() * 0.001) * 0.02;
-        this.life -= this.decay;
-        if (this.life <= 0) this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 25 + 10;
-        this.speedX = Math.random() * 1.5 - 0.75;
-        this.speedY = Math.random() * 1.5 - 0.75;
-        this.life = Math.random() * 0.5 + 0.5;
-        this.maxLife = this.life;
-        this.hue = Math.random() * 360;
       }
 
       draw() {
-        ctx.globalAlpha = this.life / this.maxLife;
-        ctx.fillStyle = `hsl(${this.hue}, 80%, 60%)`;
-        ctx.font = `${this.size}px Orbitron`;
-        ctx.textAlign = 'center';
-        ctx.fillText(this.icon, this.x, this.y);
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = ctx.fillStyle;
-        ctx.fillText(this.icon, this.x, this.y);
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1;
+        ctx.fillStyle = `rgba(0, 255, 0, ${this.opacity})`;
+        ctx.font = `${fontSize}px monospace`;
+        for (let i = 0; i < this.text.length; i++) {
+          const char = this.text.charAt(i);
+          const yPos = this.y + i * fontSize;
+          if (yPos > canvas.height) continue;
+          ctx.fillText(char, this.x, yPos);
+
+          if (i === 0) {
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "rgba(0, 255, 0, 0.7)";
+            ctx.fillText(char, this.x, yPos);
+            ctx.shadowBlur = 0;
+          }
+        }
+      }
+
+      update() {
+        this.y += this.speed;
+        if (this.y > canvas.height) {
+          this.y = Math.random() * -100;
+          this.generateText();
+          this.opacity = Math.random() * 0.5 + 0.3;
+        }
       }
     }
 
     function init() {
-      for (let i = 0; i < 40; i++) {
-        particles.push(new Particle());
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      streams.length = 0; // Clear existing streams
+      for (let i = 0; i < Math.floor(canvas.width / fontSize); i++) {
+        streams[i] = new Stream();
+        streams[i].generateText();
       }
     }
 
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'rgba(75, 0, 130, 0.05)';
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        particles[i].update();
-        particles[i].draw();
+      for (let i = 0; i < streams.length; i++) {
+        streams[i].update();
+        streams[i].draw();
       }
 
-      if (particles.length < 40 && Math.random() < 0.1) {
-        particles.push(new Particle());
-      }
-
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     }
 
-    init();
-    animate();
+    function startAnimation() {
+      if (!animationFrameId) {
+        animate();
+      }
+    }
 
+    function stopAnimation() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    }
+
+    // Initialize and start
+    init();
+    startAnimation();
+
+    // Optimized resize handler
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      clearTimeout(resizeTimeout);
+      stopAnimation();
+      resizeTimeout = setTimeout(() => {
+        init();
+        startAnimation();
+      }, 100); // Throttle resize to 100ms
     });
 
     // GSAP Animations
@@ -444,26 +492,32 @@
       const form = e.target;
       const button = form.querySelector("button");
       const formData = new FormData(form);
+      const groups = form.querySelectorAll(".form-group");
 
       let isValid = true;
-      const inputs = form.querySelectorAll("input[required], select[required]");
-      inputs.forEach(input => {
+      groups.forEach(group => {
+        const input = group.querySelector("input, select");
+        const errorMsg = group.querySelector(".error-message");
+        group.classList.remove("error");
+
         if (!input.value) {
-          input.classList.add("error");
+          group.classList.add("error");
           isValid = false;
         } else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-          input.classList.add("error");
+          group.classList.add("error");
           isValid = false;
         } else if (input.type === "tel" && !input.value.match(/\+?[1-9]\d{9,14}/)) {
-          input.classList.add("error");
+          group.classList.add("error");
           isValid = false;
+        }
+        if (group.classList.contains("error")) {
+          errorMsg.style.display = "block";
         } else {
-          input.classList.remove("error");
+          errorMsg.style.display = "none";
         }
       });
 
       if (!isValid) {
-        alert("Please fill in all fields correctly. Ensure email and phone number formats are valid.");
         return;
       }
 
@@ -478,7 +532,10 @@
       .then(result => {
         alert("✅ Registration for XLR8 Hackathon 2025 submitted successfully!");
         form.reset();
-        inputs.forEach(input => input.classList.remove("error"));
+        groups.forEach(group => {
+          group.classList.remove("error");
+          group.querySelector(".error-message").style.display = "none";
+        });
         gsap.fromTo(".container", { scale: 1.05, opacity: 0.95 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.3)" });
       })
       .catch(error => {
